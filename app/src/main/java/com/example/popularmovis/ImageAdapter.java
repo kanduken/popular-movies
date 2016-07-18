@@ -13,6 +13,7 @@ import android.widget.Gallery.LayoutParams;
 import com.example.popularmovis.R;
 import com.squareup.picasso.Picasso;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -20,7 +21,7 @@ import java.util.ArrayList;
  */
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;
-    public ArrayList<String> images = new ArrayList<String>(20);
+    public ArrayList<String> images = new ArrayList<String>();
 
     public ImageAdapter(Context c) {
         mContext = c;
@@ -52,9 +53,18 @@ public class ImageAdapter extends BaseAdapter {
 
 
         }
-//        imageView.setImageResource(R.mipmap.image);
-        Picasso.with(mContext).load(images.get(position)).into(imageView);
-//        Picasso.with(mContext).load(R.mipmap.image).into(imageView);
+
+
+//        ArrayList<String> apple = new ArrayList<>();
+//        apple = images;
+        if(images.get(position)==null) {
+            imageView.setImageResource(R.mipmap.poster_not_available);
+        }
+        else{
+            Picasso.with(mContext).load(images.get(position)).into(imageView);
+        }
+
+
 
         return imageView;
     }

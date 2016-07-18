@@ -2,10 +2,12 @@ package com.example.popularmovis;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -64,13 +66,22 @@ public class MovieGridFragment extends Fragment {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_refresh) {
-            FetchMovieData movieData = new FetchMovieData();
-            movieData.execute();
+            updateMovieList();
+//            FetchMovieData movieData = new FetchMovieData();
+//            movieData.execute();
 
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void updateMovieList() {
+        FetchMovieData movieData = new FetchMovieData();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String sortOrder = prefs.getString(getString(R.string.pref_sort_key),getString(R.string.pref_sort_by_popularity));
+        movieData.execute(sortOrder);
+
     }
 
     @Override
@@ -97,7 +108,7 @@ public class MovieGridFragment extends Fragment {
 
     }
 
-    public class FetchMovieData extends AsyncTask<Void, Void, String[]>{
+    public class FetchMovieData extends AsyncTask<String, Void, String[]>{
         private final String LOG_TAG = FetchMovieData.class.getSimpleName();
 
         private String[] parseMovieData(String jsonResponse)
@@ -133,7 +144,9 @@ public class MovieGridFragment extends Fragment {
 
                 mMovieDetailList.add(movieDetails);
 
-                posterAddress[j] = "http://image.tmdb.org/t/p//w185/" + posterPath;
+                posterAddress[j] = (posterPath.equals("null")) ? null : "http://image.tmdb.org/t/p//w185/" + posterPath;
+
+
 
             }
             for (String s : posterAddress) {
@@ -143,7 +156,7 @@ public class MovieGridFragment extends Fragment {
         }
 
         @Override
-        protected String[] doInBackground(Void... params) {
+        protected String[] doInBackground(String... params) {
 
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
@@ -152,7 +165,7 @@ public class MovieGridFragment extends Fragment {
             String country = "US";
             String rating = "R";
             String sort = "popularity.desc";
-            String apiKey = Constants.API_KEY;
+            String apiKey = Secrets.API_KEY;
             //building the URL for the movie DB
 
             try {
@@ -166,7 +179,7 @@ public class MovieGridFragment extends Fragment {
                 Uri buildUri = Uri.parse(movieDbUrl).buildUpon()
                         .appendQueryParameter(releaseCountry, country)
                         .appendQueryParameter(certificate, rating)
-                        .appendQueryParameter(sortingOrder, sort)
+                        .appendQueryParameter(sortingOrder, params[0])
                         .appendQueryParameter(apiId, apiKey)
                         .build();
 
