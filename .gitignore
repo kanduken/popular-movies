@@ -1,4 +1,8 @@
-/app/src/main/java/com/example/popularmovis/Constants.java
+
+/app/src/main/java/com/example/popularmovis/Secrets.java
+
+app/src/main/java/com/example/popularmovis/Secrets.java
+
 
 # Created by https://www.gitignore.io/api/android
 
