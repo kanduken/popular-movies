@@ -1,4 +1,4 @@
-package com.example.popularmovis;
+package com.randap.popularmovis;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

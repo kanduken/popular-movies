@@ -1,4 +1,4 @@
-package com.example.popularmovis;
+package com.randap.popularmovis.Activities;
 
 
 import android.annotation.TargetApi;
@@ -9,6 +9,8 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+
+import com.randap.popularmovis.R;
 
 public class SettingsActivity extends PreferenceActivity
         implements Preference.OnPreferenceChangeListener {

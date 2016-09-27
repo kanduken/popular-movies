@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme" parent="android:Theme.Material.Light">
+    <!--<style name="AppTheme" parent="android:Theme.App">-->
+    <!--</style>-->
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+
+    <style name="AppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar" />
+
+    <style name="Toolbar" parent="Widget.AppCompat.Light.ActionBar">
+        <item name="android:background">@color/grey</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
     </style>
+
+    <style name="CustomTheme.Dialog" parent="Theme.AppCompat.Light.Dialog" />
+
 </resources>
